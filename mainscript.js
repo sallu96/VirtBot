@@ -267,7 +267,7 @@ function scrollToBottomOfResults() {
 function send(message) {
 
     $.ajax({
-        url: "https://nluservertest.herokuapp.com/webhooks/rest/webhook",
+        url: "https://nlurasaserver.herokuapp.com/webhooks/rest/webhook",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ message: message, sender: user_id }),
