@@ -152,6 +152,13 @@ body {
     animation-duration: 11s;
 }
 
+.mike{
+  border: 2px solid red;
+  padding: 5px;
+  border-radius: 25px;
+  margin-right: -10px;
+  margin-top: -2px;
+}
 
 
 @keyframes animate {
