@@ -75,6 +75,7 @@ speech.volume = 1;
 
 
 
+
 $('#mike-btn').mousedown(function(e) {
 
   $("#mike-btn").css("background-color","yellow");
@@ -146,9 +147,10 @@ $(document).ready(function() {
 
 // ========================== restart conversation ========================
 function restartConversation() {
-    $("#userInput").prop('disabled', true);
+    // $("#userInput").prop('disabled', true);
     //destroy the existing chart
     $('.collapsible').remove();
+    $('#userInput').focus();
 
     if (typeof chatChart !== 'undefined') { chatChart.destroy(); }
 
@@ -267,7 +269,7 @@ function scrollToBottomOfResults() {
 function send(message) {
 
     $.ajax({
-        url: "https://nlurasaserver.herokuapp.com/webhooks/rest/webhook",
+        url: "https://mospi-bot.azurewebsites.net/webhooks/rest/webhook",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ message: message, sender: user_id }),
@@ -312,7 +314,7 @@ function setBotResponse(response) {
             //if there is no response from Rasa, send  fallback message to the user
             var fallbackMsg = "I am facing some issues, please try again later!!!";
 
-            var BotResponse = '<img class="botAvatar" src="bot_icon.png"/><p class="botMsg">' + fallbackMsg + '</p><div class="clearfix"></div>';
+            var BotResponse = '<img class="botAvatar" src="satyamaevjayte.png"/><p class="botMsg">' + fallbackMsg + '</p><div class="clearfix"></div>';
 
             $(BotResponse).appendTo(".chats").hide().fadeIn(1000);
 
@@ -328,7 +330,7 @@ function setBotResponse(response) {
 
                 //check if the response contains "text"
                 if (response[i].hasOwnProperty("text")) {
-                    var BotResponse = '<img class="botAvatar" src="bot_icon.png"/><p class="botMsg">' + response[i].text + '</p><div class="clearfix"></div>';
+                    var BotResponse = '<img class="botAvatar" src="satyamaevjayte.png"/><p class="botMsg">' + response[i].text + '</p><div class="clearfix"></div>';
                     $(BotResponse).appendTo(".chats").hide().fadeIn(1000);
                     speech.text=response[i].text
                     window.speechSynthesis.speak(speech);
@@ -417,7 +419,7 @@ function setBotResponse(response) {
                     if (response[i].custom.payload == "chart") {
 
                         // sample format of the charts data:
-                        // var chartData = { "title": "Leaves", "labels": ["Sick Leave", "Casual Leave", "Earned Leave", "Flexi Leave"], "backgroundColor": ["#36a2eb", "#ffcd56", "#ff6384", "#009688", "#c45850"], "chartsData": [5, 10, 22, 3], "chartType": "pie", "displayLegend": "true" }
+                        var chartData = { "title": "Leaves", "labels": ["Sick Leave", "Casual Leave", "Earned Leave", "Flexi Leave"], "backgroundColor": ["#36a2eb", "#ffcd56", "#ff6384", "#009688", "#c45850"], "chartsData": [5, 10, 22, 3], "chartType": "pie", "displayLegend": "true" }
 
                         //store the below parameters as global variable,
                         // so that it can be used while displaying the charts in modal.
@@ -481,7 +483,7 @@ $("#profile_div").click(function() {
 //    count=0;
 
     $(".profile_div").toggle();
-    $(".widget").show();
+    $(".widget").delay(0).fadeIn(500);
     scrollToBottomOfResults();
     count=0;
     console.log("show in function")
@@ -660,6 +662,7 @@ function createCardsCarousel(cardsData) {
 
     var cards = "";
 
+
     for (i = 0; i < cardsData.length; i++) {
         title = cardsData[i].name;
         ratings = Math.round((cardsData[i].ratings / 5) * 100) + "%";
@@ -813,7 +816,7 @@ function handleLocationAccessError(error) {
 //======================================bot typing animation ======================================
 function showBotTyping() {
 
-    var botTyping = '<img class="botAvatar" id="botAvatar" src="bot_icon.png"/><div class="botTyping">' + '<div class="bounce1"></div>' + '<div class="bounce2"></div>' + '<div class="bounce3"></div>' + '</div>'
+    var botTyping = '<img class="botAvatar" id="botAvatar" src="satyamaevjayte.png"/><div class="botTyping">' + '<div class="bounce1"></div>' + '<div class="bounce2"></div>' + '<div class="bounce3"></div>' + '</div>'
     $(botTyping).appendTo(".chats");
     $('.botTyping').show();
     scrollToBottomOfResults();
@@ -956,3 +959,221 @@ function createChartinModal(title, labels, backgroundColor, chartsData, chartTyp
     });
 
 }
+
+
+
+
+
+(function() {
+  //'use strict';
+
+  // required DOM nodes
+  var nodes = {
+    start: document.querySelector('[data-start]'),
+    speech: document.querySelector('[data-speech]'),
+    speechInner: document.querySelector('[data-speech] > p')
+  };
+
+  // speech triggers and css classes
+  var triggers = {
+    'left': 'show-left',
+    'right': 'show-right',
+    'top': 'show-top',
+    'bottom': 'show-bottom',
+    'front': 'show-front',
+    'back': 'show-back',
+    'bounce': 'animated bounce',
+    'pulse': 'animated pulse',
+    'shake': 'animated shake',
+    'swing': 'animated swing',
+    'wobble': 'animated wobble',
+    'jello': 'animated jello',
+    'flip': 'animated flip',
+    'hinge': 'animated hinge'
+  };
+
+  // check for SpeechRecognition API
+  if (!('webkitSpeechRecognition' in window)) {
+    console.log('Speech recognition not supported');
+    return false;
+  };
+
+  // declare variables
+  var recognition = new webkitSpeechRecognition();
+  var language = 'it-IT';
+  var finalTranscript = '';
+  var recognizing = false;
+  var ignoreOnEnd;
+  var startTimestamp;
+  var $wordsBox = $(".words-box");
+
+  // initialize speech recognition
+  recognition.lang = language;
+  recognition.continuous = true;
+  recognition.interimResults = true;
+
+  // speech recognition started
+  recognition.onstart = function() {
+    recognizing = true;
+    nodes.start.classList.add('active');
+    //nodes.speech.classList.add('active');
+    console.log('Speech recognition service started');
+  };
+
+  // speech recognition end
+  recognition.onend = function(event) {
+    recognizing = false;
+    //cancello tutto
+    $wordsBox.empty();
+    nodes.start.classList.remove('active');
+    nodes.speech.classList.remove('active');
+    console.log('Speech recognition service disconnected');
+  };
+
+  recognition.onnomatch = function(event) {
+    console.log('I didnt recognise that word.');
+  };
+
+  // speech recognition error
+  recognition.onerror = function(event) {
+    console.error('Error occurred in recognition: ' + event.error);
+    recognition.stop();
+  };
+
+  // speech recognition result
+  recognition.onresult = function(event) {
+
+    // show speech recognition results
+    nodes.speech.classList.add('active');
+
+    var lastIndex = event.results.length;
+    var word = event.results[lastIndex - 1][0].transcript;
+    var confidence = event.results[lastIndex - 1][0].confidence;
+    var wordsArray = word.split(" ");
+    var newWord = wordsArray[wordsArray.length - 1]; //solo ultima parola
+
+    var boxWidth = $wordsBox.width();
+    var boxHeight = $wordsBox.height();
+
+    //create net $item with word spoken
+    var $item = $("<p></p>").text(newWord)
+      .addClass("item-text")
+      .css("top", Math.random() * boxHeight)
+      .css("left", Math.random() * boxWidth)
+      .hide();
+
+    // Append new $item to DIV and animate
+    if (confidence > 0.8) {
+      $item.appendTo($wordsBox);
+      $item.fadeIn('3000');
+      $item.animate({
+        opacity: 0.3,
+        scale: 0.6
+      }, 15000);
+      $item.animate({
+              opacity: 0.1,
+              scale: 0.2
+            }, 20000);
+
+      //$item.fadeOut('10000');
+      $item.remove('10000');
+    }
+
+    // loop through results
+    for (var i = event.resultIndex; i < event.results.length; ++i) {
+
+      // store transcript and check for match
+      var transcript = event.results[i][0].transcript.trim().toLowerCase(),
+        match = checkForTrigger(transcript);
+
+      // update speech recognition visual
+      nodes.speechInner.innerHTML = transcript;
+
+      // we have a trigger match
+      if (match) {
+
+        // allow user to see matched trigger with 500ms delay
+        setTimeout(function() {
+          recognizing = false;
+          recognition.stop();
+          // do something
+        }, 500);
+
+      }
+    }
+  };
+
+  // record btn - start / stop speech recognition
+  nodes.start.addEventListener('click', function() {
+    if (recognizing) {
+      recognition.stop();
+      recognizing = false;
+      return;
+    }
+    recognition.start();
+  });
+
+  // speech visual - stop speech recognition
+  nodes.speech.addEventListener('click', function() {
+    recognition.stop();
+  });
+
+  // accept speech recognition transcript
+  // test for speech recognition trigger match
+  // return object with matched trigger and css classes or false
+  function checkForTrigger(check) {
+    var cls = '',
+      trg = '';
+
+    for (var x in triggers) {
+      var split = x.split(' ');
+
+      split.every(function(s) {
+        if (check.indexOf(s) > -1) {
+          cls = triggers[x];
+          trg = x;
+          return false;
+        }
+
+        return true;
+      });
+    }
+
+    return cls && trg ? {
+      class: cls,
+      trigger: trg
+    } : false;
+  }
+
+  // instantiate material design modal JS
+  $(document).ready(function() {
+    $('.modal-trigger').leanModal();
+  });
+
+})();
+
+
+$('#btn-main').on('touchstart click', function() {
+  if ($(this).hasClass('active')) {
+    $(this).removeClass('active');         $(this).addClass('reverse-animation');
+  } else {
+    $(this).removeClass('reverse-animation');
+    $(this).addClass('active');
+  }
+
+  return false;
+});
+
+
+
+
+$('#btn-main').on('touchstart click', function() {
+  if ($(this).hasClass('active')) {
+    $(this).removeClass('active');         $(this).addClass('reverse-animation');
+  } else {
+    $(this).removeClass('reverse-animation');
+    $(this).addClass('active');
+  }
+
+  return false;
+});
