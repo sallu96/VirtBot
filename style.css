@@ -45,15 +45,29 @@
 }
 
 div.chats::-webkit-scrollbar {
-    overflow-y: auto;
     width: 10px;
-   background-color: darkgrey;
-  outline: 1px solid slategrey;
+  }
+
+
+div.chats::-webkit-scrollbar-thumb {
+  background-color: #3366FF;
+	border-radius: 10px;
+	background-image: -webkit-linear-gradient(0deg,
+	                                          rgba(255, 255, 255, 0.5) 25%,
+											  transparent 25%,
+											  transparent 50%,
+											  rgba(255, 255, 255, 0.5) 50%,
+											  rgba(255, 255, 255, 0.5) 75%,
+											  transparent 75%,
+											  transparent)
+}
 
     /* remove scrollbar space /
      background: transparent;
     / optional: just make scrollbar invisible */
 }
+
+
 
 .clearfix {
     margin-top: 2px;
@@ -91,6 +105,10 @@ textarea {
     outline: none;
     overflow: hidden;
     font-family: Raleway;
+}
+
+.typed-cursor{
+    display:none;
 }
 
 textarea::-webkit-input-placeholder {
