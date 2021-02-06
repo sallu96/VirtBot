@@ -133,7 +133,7 @@ $(document).ready(function() {
 
 
     //enable this if u have configured the bot to start the conversation.
-//     showBotTyping();
+      showBotTyping();
 //     $("#userInput").prop('disabled', true);
 
     //global variables
@@ -141,7 +141,7 @@ $(document).ready(function() {
     user_id = "VirtiBot";
 
     //if you want the bot to start the conversation
-    //action_trigger();
+    action_trigger();
 
 })
 
