@@ -347,7 +347,7 @@ function setBotResponse(response) {
                 //check if the response contains "text"
 
                 if (response[i].hasOwnProperty("text")) {
-                    var BotResponse = '<img class="botAvatar" src="bot_icon.png"/><p class="botMsg"><b>' + response[i].text + '</b></p><div class="clearfix"></div>';
+                    var BotResponse = '<img class="botAvatar" src="satyamaevjayte.png"/><p class="botMsg"><b>' + response[i].text + '</b></p><div class="clearfix"></div>';
                     $(BotResponse).appendTo(".chats").hide().fadeIn(1000);
 //                    speech.text=response[i].text
 //                    window.speechSynthesis.speak(speech);
