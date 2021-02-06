@@ -330,7 +330,7 @@ function setBotResponse(response) {
             //if there is no response from Rasa, send  fallback message to the user
             var fallbackMsg = "I am facing some issues, please try again later!!!";
 
-            var BotResponse = '<img class="botAvatar" src="bot_icon.png"/><p class="botMsg" > <b>' + fallbackMsg + '</b> </p><div class="clearfix"></div>';
+            var BotResponse = '<img class="botAvatar" src="satyamaevjayte.png"/><p class="botMsg" > <b>' + fallbackMsg + '</b> </p><div class="clearfix"></div>';
 
             $(BotResponse).appendTo(".chats").hide().fadeIn(1000);
 
@@ -828,7 +828,7 @@ $('<div id="calender"><div class="container"><div class="panel panel-primary"><d
 function getlinks(links)
 {
   var result = links.link(links);
-  var project_links = '<img class="botAvatar" src="bot_icon.png"/><p class="botMsg"><b>' + result + '</b></p><div class="clearfix"></div>';
+  var project_links = '<img class="botAvatar" src="satyamaevjayte.png"/><p class="botMsg"><b>' + result + '</b></p><div class="clearfix"></div>';
                     $(project_links).appendTo(".chats").hide().fadeIn(1000);
 }
 
@@ -885,7 +885,7 @@ function handleLocationAccessError(error) {
 //======================================bot typing animation ======================================
 function showBotTyping() {
 
-    var botTyping = '<img class="botAvatar" id="botAvatar" src="bot_icon.png"/><div class="botTyping">' + '<div class="bounce1"></div>' + '<div class="bounce2"></div>' + '<div class="bounce3"></div>' + '</div>'
+    var botTyping = '<img class="botAvatar" id="botAvatar" src="satyamaevjayte.png"/><div class="botTyping">' + '<div class="bounce1"></div>' + '<div class="bounce2"></div>' + '<div class="bounce3"></div>' + '</div>'
     $(botTyping).appendTo(".chats");
     $('.botTyping').show();
     scrollToBottomOfResults();
