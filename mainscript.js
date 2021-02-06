@@ -103,9 +103,9 @@ $('#mike-btn').mouseup(function(e) {
 //  console.log("Content value is ",Content)
 //})
 
-var btn_clicked;
+//var btn_clicked;
 var audio = new Audio("notify.mp3");
-$('#not').hide();
+//$('#not').hide();
 //Bot pop-up intro
 document.addEventListener('DOMContentLoaded', function() {
     var elemsTap = document.querySelector('.tap-target');
@@ -443,38 +443,57 @@ function setBotResponse(response) {
                         createCollapsible(data);
                     }
                 }
+
+                console.log("Count Before", count)
                 count=count+1
-                console.log("count ", count)
-               if(btn_clicked == true)
-               {
-               console.log("under if condition ");
-               console.log("Count after button clicked ",count);
-               if (count ==0){
+                console.log("count Inside ", count)
+     //            count=count+1
+     //            console.log("count ", count)
+     //           if(btn_clicked == true)
+     //           {
+     //           console.log("under if condition ");
+     //           console.log("Count after button clicked ",count);
+     //           if (count ==0){
+     //
+     //           $('#not').hide();
+     //           }
+     //           $('#not').html(count);
+     //           audio.play();
+     //           }
+     //      if(btn_clicked==true)
+     // {    count=0
+     //      $('#not').hide();
+     //      console.log("Show");
+     // }
+     if(btn_clicked==false)
+{   if (count != 0)
+   {
+     $('#not').show();
+     console.log(count);
+     $('#not').html(count);
+     audio.play();
+//          document.getElementById('alarm').muted = false;
+//          document.getElementById('alarm').play();
 
-               $('#not').hide();
-               }
-               $('#not').html(count);
-               audio.play();
-               }
-          if(btn_clicked==true)
-     {    count=0
-          $('#not').hide();
-          console.log("Show");
-     }
-          if(btn_clicked==false)
-     {
-          $('#not').show();
-          $('#not').html(count);
-          audio.play();
-          console.log("hide");
-     }
-
-
-            }
-            scrollToBottomOfResults();
-        }
-    }, 500);
+     console.log("Buttom clicked False");
+   }
 }
+else
+{
+
+count=0
+     $('#not').hide();
+     console.log("Button Clicked True");
+
+}
+
+
+       }
+       scrollToBottomOfResults();
+   }
+}, 500);
+}
+
 
 //====================================== Toggle chatbot =======================================
 $("#profile_div").click(function() {
