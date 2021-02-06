@@ -103,9 +103,9 @@ $('#mike-btn').mouseup(function(e) {
 //  console.log("Content value is ",Content)
 //})
 
-// var btn_clicked;
-// var audio = new Audio("notify.mp3");
-// $('#not').hide();
+var btn_clicked;
+var audio = new Audio("notify.mp3");
+$('#not').hide();
 //Bot pop-up intro
 document.addEventListener('DOMContentLoaded', function() {
     var elemsTap = document.querySelector('.tap-target');
@@ -445,17 +445,17 @@ function setBotResponse(response) {
                 }
                 count=count+1
                 console.log("count ", count)
-//                if(btn_clicked == true)
-//                {
-//                console.log("under if condition ");
-//                console.log("Count after button clicked ",count);
-//                if (count ==0){
-//
-//                $('#not').hide();
-//                }
-//                $('#not').html(count);
-//                audio.play();
-//                }
+               if(btn_clicked == true)
+               {
+               console.log("under if condition ");
+               console.log("Count after button clicked ",count);
+               if (count ==0){
+
+               $('#not').hide();
+               }
+               $('#not').html(count);
+               audio.play();
+               }
           if(btn_clicked==true)
      {    count=0
           $('#not').hide();
