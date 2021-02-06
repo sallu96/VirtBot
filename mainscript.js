@@ -142,7 +142,7 @@ $(document).ready(function() {
 
 
     //enable this if u have configured the bot to start the conversation.
-//     showBotTyping();
+     showBotTyping();
 //     $("#userInput").prop('disabled', true);
 
     //global variables
@@ -179,7 +179,7 @@ function action_trigger() {
 
     // send an event to the bot, so that bot can start the conversation by greeting the user
     $.ajax({
-        url: `http://localhost:5005/conversations/${user_id}/execute`,
+        url: `https://mospi-final.azurewebsites.net/conversations/${user_id}/execute`,
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ "name": action_name, "policy": "MappingPolicy", "confidence": "0.98" }),
