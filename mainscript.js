@@ -1,100 +1,99 @@
 //
 //// Test to Speech
-var volume_btn;
-
-let speech = new SpeechSynthesisUtterance();
-
-speech.lang = "en-US";
-
-speech.volume = 1;
-
-speech.rate = 1;
-speech.pitch = 1;
-
-try {
-  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  var recognition = new SpeechRecognition();
-}
-catch(e) {
-  console.error(e);
-  $('.no-browser-support').show();
-  $('.app').hide();
-}
-
-var Textbox = $('#chats');
-
-var Content = '';
-
-recognition.continuous = true;
-
-recognition.onresult = function(event) {
-
-  var current = event.resultIndex;
-
-  var transcript = event.results[current][0].transcript;
-    Content="";
-    Content += transcript;
-    console.log("Content value is ",Content)
-
-var UserResponse = '<img class="userAvatar" src=' + "userAvatar.jpg" + '><p class="userMsg">' + Content + ' </p><div class="clearfix"></div>';
-    $(UserResponse).appendTo(".chats").show("slow");
-    scrollToBottomOfResults();
-    send(Content);
-//    Textbox.val(Content);
-
-};
-
+//var volume_btn;
 //
-//$('#volume').click(function(e) {
-//var volume_btn=true;
+//let speech = new SpeechSynthesisUtterance();
+//
+//speech.lang = "en-US";
+//
+//speech.volume = 1;
+//
+//speech.rate = 1;f
+//speech.pitch = 1;
+//
+//try {
+//  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+//  var recognition = new SpeechRecognition();
+//}
+//catch(e) {
+//  console.error(e);
+//  $('.no-browser-support').show();
+//  $('.app').hide();
+//}
+//
+//var Textbox = $('#chats');
+//
+//var Content = '';
+//
+//recognition.continuous = true;
+//
+//recognition.onresult = function(event) {
+//
+//  var current = event.resultIndex;
+//
+//  var transcript = event.results[current][0].transcript;
+//    Content="";
+//    Content += transcript;
+//    console.log("Content value is ",Content)
+//
+//var UserResponse = '<img class="userAvatar" src=' + "userAvatar.jpg" + '><p class="userMsg">' + Content + ' </p><div class="clearfix"></div>';
+//    $(UserResponse).appendTo(".chats").show("slow");
+//    scrollToBottomOfResults();
+//    send(Content);
+////    Textbox.val(Content);
+//
+//};
+//
+////
+////$('#volume').click(function(e) {
+////var volume_btn=true;
+////});
+//
+//
+//
+//var un_mute = document.getElementById('un-mute');
+//
+//un_mute.onclick = function() {
+////var btn=$("input[type='checkbox']").val();
+////alert($('#un-mute').html());
+////console.log(btn);
+////speech.volume = 0;
+//var selectedLanguage = new Array();
+//$('input[name="un-mute"]:checked').each(function() {
+//selectedLanguage.push(this.value);
 //});
-
-
-
-var un_mute = document.getElementById('un-mute');
-
-un_mute.onclick = function() {
-//var btn=$("input[type='checkbox']").val();
-//alert($('#un-mute').html());
-//console.log(btn);
+//
+//if(selectedLanguage.length==1)
+//{
 //speech.volume = 0;
-var selectedLanguage = new Array();
-$('input[name="un-mute"]:checked').each(function() {
-selectedLanguage.push(this.value);
-});
-
-if(selectedLanguage.length==1)
-{
-speech.volume = 0;
-}
-else
-{
-speech.volume = 1;
-}
-}
-
-
-
-
-$('#mike-btn').mousedown(function(e) {
-
-  $("#mike-btn").css("background-color","yellow");
-  if (Content.length) {
-    Content += ' ';
-//    console.log("content is" , Content);
-  }
-  recognition.start();
-});
-
-
-$('#mike-btn').mouseup(function(e) {
-  $("#mike-btn").css("background-color","white");
-  if (Content.length) {
-    Content += ' ';
-//    console.log("content is" , Content);
-  }
-  recognition.stop();
-});
+//}
+//else
+//{
+//speech.volume = 1;
+//}
+//}
+//
+//
+//
+//$('#mike-btn').mousedown(function(e) {
+//
+//  $("#mike-btn").css("background-color","yellow");
+//  if (Content.length) {
+//    Content += ' ';
+////    console.log("content is" , Content);
+//  }
+//  recognition.start();
+//});
+//
+//
+//$('#mike-btn').mouseup(function(e) {
+//  $("#mike-btn").css("background-color","white");
+//  if (Content.length) {
+//    Content += ' ';
+////    console.log("content is" , Content);
+//  }
+//  recognition.stop();
+//});
 
 
 //
@@ -103,10 +102,15 @@ $('#mike-btn').mouseup(function(e) {
 //  console.log("Content value is ",Content)
 //})
 
-//var btn_clicked;
+// var btn_clicked;
 var audio = new Audio("notify.mp3");
-//$('#not').hide();
+//audio.play()
+// $('#not').hide();
 //Bot pop-up intro
+
+
+btn_clicked=false;
+
 document.addEventListener('DOMContentLoaded', function() {
     var elemsTap = document.querySelector('.tap-target');
     var instancesTap = M.TapTarget.init(elemsTap, {});
@@ -118,6 +122,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //initialization
 $(document).ready(function() {
+
+//
+//document.getElementById('alarm').autoplay = true;
+//document.getElementById('alarm').muted=true;
+//document.getElementById('alarm').play();
 
     $('#userInput').focus();
 
@@ -137,17 +146,18 @@ $(document).ready(function() {
 //     $("#userInput").prop('disabled', true);
 
     //global variables
+//    restartConversation();
+//    send("/restart");
     action_name = "action_greet_gif";
+//     action_name="utter_greet"
     user_id = "VirtiBot";
 
     //if you want the bot to start the conversation
-    //action_trigger();
+//    restartConversation();
+      action_trigger();
+
 
 })
-
-
-
-
 
 // ========================== restart conversation ========================
 function restartConversation() {
@@ -320,7 +330,7 @@ function setBotResponse(response) {
             //if there is no response from Rasa, send  fallback message to the user
             var fallbackMsg = "I am facing some issues, please try again later!!!";
 
-            var BotResponse = '<img class="botAvatar" src="bot_icon.png"/><p class="botMsg" > <b>' + fallbackMsg + '</b> </p><div class="clearfix"></div>';
+            var BotResponse = '<img class="botAvatar" src="satyamaevjayte.png"/><p class="botMsg" > <b>' + fallbackMsg + '</b> </p><div class="clearfix"></div>';
 
             $(BotResponse).appendTo(".chats").hide().fadeIn(1000);
 
@@ -337,7 +347,7 @@ function setBotResponse(response) {
                 //check if the response contains "text"
 
                 if (response[i].hasOwnProperty("text")) {
-                    var BotResponse = '<img class="botAvatar" src="bot_icon.png"/><p class="botMsg"><b>' + response[i].text + '</b></p><div class="clearfix"></div>';
+                    var BotResponse = '<img class="botAvatar" src="satyamaevjayte.png"/><p class="botMsg"><b>' + response[i].text + '</b></p><div class="clearfix"></div>';
                     $(BotResponse).appendTo(".chats").hide().fadeIn(1000);
 //                    speech.text=response[i].text
 //                    window.speechSynthesis.speak(speech);
@@ -818,7 +828,7 @@ $('<div id="calender"><div class="container"><div class="panel panel-primary"><d
 function getlinks(links)
 {
   var result = links.link(links);
-  var project_links = '<img class="botAvatar" src="bot_icon.png"/><p class="botMsg"><b>' + result + '</b></p><div class="clearfix"></div>';
+  var project_links = '<img class="botAvatar" src="satyamaevjayte.png"/><p class="botMsg"><b>' + result + '</b></p><div class="clearfix"></div>';
                     $(project_links).appendTo(".chats").hide().fadeIn(1000);
 }
 
@@ -875,7 +885,7 @@ function handleLocationAccessError(error) {
 //======================================bot typing animation ======================================
 function showBotTyping() {
 
-    var botTyping = '<img class="botAvatar" id="botAvatar" src="bot_icon.png"/><div class="botTyping">' + '<div class="bounce1"></div>' + '<div class="bounce2"></div>' + '<div class="bounce3"></div>' + '</div>'
+    var botTyping = '<img class="botAvatar" id="botAvatar" src="satyamaevjayte.png"/><div class="botTyping">' + '<div class="bounce1"></div>' + '<div class="bounce2"></div>' + '<div class="bounce3"></div>' + '</div>'
     $(botTyping).appendTo(".chats");
     $('.botTyping').show();
     scrollToBottomOfResults();
