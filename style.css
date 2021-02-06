@@ -415,7 +415,7 @@ div.content_data::-webkit-scrollbar {
 .imgcard {
     object-fit: cover;
     width: 85%;
-    height: 80%;
+    height: 70%;
     border-radius: 10px;
     margin-left: 1%;
 }
