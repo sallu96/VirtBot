@@ -1,111 +1,114 @@
+// Test to Speech
+var volume_btn;
+
+let speech = new SpeechSynthesisUtterance();
+
+speech.lang = "en-US";
+
+speech.volume = 1;
+
+speech.rate = 1;
+speech.pitch = 1;
+
+try {
+  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  var recognition = new SpeechRecognition();
+}
+catch(e) {
+  console.error(e);
+  $('.no-browser-support').show();
+  $('.app').hide();
+}
+
+var Textbox = $('#chats');
+
+var Content = '';
+
+recognition.continuous = true;
+
+recognition.onresult = function(event) {
+
+  var current = event.resultIndex;
+
+  var transcript = event.results[current][0].transcript;
+    Content="";
+    Content += transcript;
+    console.log("Content value is ",Content)
+
+var UserResponse = '<img class="userAvatar" src=' + "userAvatar.jpg" + '><p class="userMsg">' + Content + ' </p><div class="clearfix"></div>';
+    $(UserResponse).appendTo(".chats").show("slow");
+    scrollToBottomOfResults();
+    send(Content);
+    Textbox.val(Content);
+
+};
+
 //
-//// Test to Speech
-//var volume_btn;
-//
-//let speech = new SpeechSynthesisUtterance();
-//
-//speech.lang = "en-US";
-//
-//speech.volume = 1;
-//
-//speech.rate = 1;f
-//speech.pitch = 1;
-//
-//try {
-//  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-//  var recognition = new SpeechRecognition();
-//}
-//catch(e) {
-//  console.error(e);
-//  $('.no-browser-support').show();
-//  $('.app').hide();
-//}
-//
-//var Textbox = $('#chats');
-//
-//var Content = '';
-//
-//recognition.continuous = true;
-//
-//recognition.onresult = function(event) {
-//
-//  var current = event.resultIndex;
-//
-//  var transcript = event.results[current][0].transcript;
-//    Content="";
-//    Content += transcript;
-//    console.log("Content value is ",Content)
-//
-//var UserResponse = '<img class="userAvatar" src=' + "userAvatar.jpg" + '><p class="userMsg">' + Content + ' </p><div class="clearfix"></div>';
-//    $(UserResponse).appendTo(".chats").show("slow");
-//    scrollToBottomOfResults();
-//    send(Content);
-////    Textbox.val(Content);
-//
-//};
-//
-////
-////$('#volume').click(function(e) {
-////var volume_btn=true;
-////});
-//
-//
-//
-//var un_mute = document.getElementById('un-mute');
-//
-//un_mute.onclick = function() {
-////var btn=$("input[type='checkbox']").val();
-////alert($('#un-mute').html());
-////console.log(btn);
-////speech.volume = 0;
-//var selectedLanguage = new Array();
-//$('input[name="un-mute"]:checked').each(function() {
-//selectedLanguage.push(this.value);
+//$('#volume').click(function(e) {
+//var volume_btn=true;
 //});
-//
-//if(selectedLanguage.length==1)
-//{
+
+
+
+var un_mute = document.getElementById('un-mute');
+
+un_mute.onclick = function() {
+//var btn=$("input[type='checkbox']").val();
+//alert($('#un-mute').html());
+//console.log(btn);
 //speech.volume = 0;
-//}
-//else
-//{
-//speech.volume = 1;
-//}
-//}
-//
-//
-//
-//$('#mike-btn').mousedown(function(e) {
-//
-//  $("#mike-btn").css("background-color","yellow");
-//  if (Content.length) {
-//    Content += ' ';
-////    console.log("content is" , Content);
-//  }
-//  recognition.start();
-//});
-//
-//
-//$('#mike-btn').mouseup(function(e) {
-//  $("#mike-btn").css("background-color","white");
-//  if (Content.length) {
-//    Content += ' ';
-////    console.log("content is" , Content);
-//  }
-//  recognition.stop();
-//});
+var selectedLanguage = new Array();
+$('input[name="un-mute"]:checked').each(function() {
+selectedLanguage.push(this.value);
+});
+
+if(selectedLanguage.length==1)
+{
+speech.volume = 0;
+}
+else
+{
+speech.volume = 1;
+}
+}
 
 
-//
-//Textbox.on('input', function() {
-//  Content = $(this).val();
-//  console.log("Content value is ",Content)
-//})
 
-// var btn_clicked;
-var audio = new Audio("notify.mp3");
-//audio.play()
-// $('#not').hide();
+$('#mike-btn').mousedown(function(e) {
+
+
+  $("#mike-btn").css("background-color","lightblue");
+
+  if (Content.length) {
+//    alert("under content");
+    Content += ' ';
+    console.log("content is" , Content);
+  }
+  recognition.start();
+});
+
+
+$('#mike-btn').mouseup(function(e) {
+
+
+  $("#mike-btn").css("background-color","white");
+  if (Content.length) {
+    Content += ' ';
+    console.log("content is" , Content);
+  }
+  recognition.stop();
+});
+
+
+
+Textbox.on('input', function() {
+  Content = $(this).val();
+  console.log("Content value is ",Content)
+})
+
+ var btn_clicked;
+ var audio = new Audio("notify.mp3");
+ $('#not').hide();
 //Bot pop-up intro
 
 
@@ -179,7 +182,7 @@ function action_trigger() {
 
     // send an event to the bot, so that bot can start the conversation by greeting the user
     $.ajax({
-        url: `https://mospi-final.azurewebsites.net/conversations/${user_id}/execute`,
+        url: `https://mospi-main-server.azurewebsites.net/conversations/${user_id}/execute`,
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ "name": action_name, "policy": "MappingPolicy", "confidence": "0.98" }),
@@ -284,7 +287,7 @@ function scrollToBottomOfResults() {
 function send(message) {
 
     $.ajax({
-        url: "https://mospi-final.azurewebsites.net/webhooks/rest/webhook",
+        url: "https://mospi-main-server.azurewebsites.net/webhooks/rest/webhook",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ message: message, sender: user_id }),
@@ -334,8 +337,8 @@ function setBotResponse(response) {
 
             $(BotResponse).appendTo(".chats").hide().fadeIn(1000);
 
-//            speech.text=fallbackMsg
-//            window.speechSynthesis.speak(speech);
+           speech.text=fallbackMsg
+          window.speechSynthesis.speak(speech);
             scrollToBottomOfResults();
         } else {
 
@@ -349,8 +352,8 @@ function setBotResponse(response) {
                 if (response[i].hasOwnProperty("text")) {
                     var BotResponse = '<img class="botAvatar" src="satyamaevjayte.png"/><p class="botMsg"><b>' + response[i].text + '</b></p><div class="clearfix"></div>';
                     $(BotResponse).appendTo(".chats").hide().fadeIn(1000);
-//                    speech.text=response[i].text
-//                    window.speechSynthesis.speak(speech);
+                    speech.text=response[i].text
+                   window.speechSynthesis.speak(speech);
                 }
 
                 //check if the response contains "images"
