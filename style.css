@@ -417,7 +417,7 @@ div.content_data::-webkit-scrollbar {
     width: 85%;
     height: 70%;
     border-radius: 10px;
-    margin-left: 1%;
+    margin-left: -10%;
 }
 
 
