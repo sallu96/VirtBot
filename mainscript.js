@@ -35,7 +35,7 @@ recognition.onresult = function(event) {
     Content += transcript;
     console.log("Content value is ",Content)
 
-var UserResponse = '<img class="userAvatar" src=' + "userAvatar.jpg" + '><p class="userMsg">' + Content + ' </p><div class="clearfix"></div>';
+var UserResponse = '<img class="userAvatar" src=' + "satyamaevjayte.png" + '><p class="userMsg">' + Content + ' </p><div class="clearfix"></div>';
     $(UserResponse).appendTo(".chats").show("slow");
     scrollToBottomOfResults();
     send(Content);
@@ -267,7 +267,7 @@ $("#sendButton").on("click", function(e) {
 
 //==================================== Set user response =====================================
 function setUserResponse(message) {
-    var UserResponse = '<img class="userAvatar" src=' + "userAvatar.jpg" + '><p class="userMsg">' + message + ' </p><div class="clearfix"></div>';
+    var UserResponse = '<img class="userAvatar" src=' + "satyamaevjayte.png" + '><p class="userMsg">' + message + ' </p><div class="clearfix"></div>';
     $(UserResponse).appendTo(".chats").show("slow");
 
     $(".usrInput").val("");
@@ -731,7 +731,7 @@ function createCardsCarousel(cardsData) {
 //        ratings = Math.round((cardsData[i].ratings / 5) * 100) + "%";
 //        console.log("cardsData",cardsData[i]);
 //        data = cardsData[i];
-        item = '<div class="carousel_cards in-left">' + '<img class="cardBackgroundImage" src="./static/img/'+'userAvatar.jpg"' + cardsData[i].image + '"><div class="cardFooter">' + '<span class="cardTitle" title="' + title + '">' + title + "</span> " + '<div class="cardDescription">' + "</div>" + "</div>" + "</div>";
+        item = '<div class="carousel_cards in-left">' + '<img class="cardBackgroundImage" src="satyamaevjayte.png"' + cardsData[i].image + '"><div class="cardFooter">' + '<span class="cardTitle" title="' + title + '">' + title + "</span> " + '<div class="cardDescription">' + "</div>" + "</div>" + "</div>";
 
         cards += item;
     }
