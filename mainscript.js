@@ -448,10 +448,10 @@ function setBotResponse(response) {
 
                     //check if the custom payload type is "cardsCarousel"
                     if (response[i].custom.payload == "cardsCarousel") {
-                       Departments = (response[i].custom.data)
-                        showCardsCarousel(Departments);
-                        return;
-                    }
+                          Departments = (response[i].custom.data)
+                          showCardsCarousel(Departments);
+                          return;
+                        }
 
                     //check if the custom payload type is "chart"
                     if (response[i].custom.payload == "chart") {
