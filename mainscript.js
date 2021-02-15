@@ -151,7 +151,7 @@ $(document).ready(function() {
     //global variables
 //    restartConversation();
 //    send("/restart");
-    action_name = "action_greet_gif";
+     action_name = "action_greet_gif";
 //     action_name="utter_greet"
     user_id = "VirtiBot";
 
@@ -448,8 +448,8 @@ function setBotResponse(response) {
 
                     //check if the custom payload type is "cardsCarousel"
                     if (response[i].custom.payload == "cardsCarousel") {
-                        restaurantsData = (response[i].custom.data)
-                        showCardsCarousel(restaurantsData);
+                       Departments = (response[i].custom.data)
+                        showCardsCarousel(Departments);
                         return;
                     }
 
@@ -674,10 +674,11 @@ $("#btn-close").click(function() {
 
 
 //====================================== Cards Carousel =========================================
+//====================================== Cards Carousel =========================================
 
 function showCardsCarousel(cardsToAdd) {
     var cards = createCardsCarousel(cardsToAdd);
-
+//     console.log("card",cards)
     $(cards).appendTo(".chats").show();
 
 
@@ -695,18 +696,23 @@ function showCardsCarousel(cardsToAdd) {
     scrollToBottomOfResults();
 
     const card = document.querySelector("#paginated_cards");
+
     const card_scroller = card.querySelector(".cards_scroller");
+//        console.log("const card", card_scroller);
     var card_item_size = 225;
 
     card.querySelector(".arrow.next").addEventListener("click", scrollToNextPage);
     card.querySelector(".arrow.prev").addEventListener("click", scrollToPrevPage);
-
+//    card.querySelector(".cardFooter").addEventListener("click", hey);
 
     // For paginated scrolling, simply scroll the card one item in the given
     // direction and let css scroll snaping handle the specific alignment.
     function scrollToNextPage() {
         card_scroller.scrollBy(card_item_size, 0);
     }
+//    function hey() {
+//        alert("hey");
+//    }
 
     function scrollToPrevPage() {
         card_scroller.scrollBy(-card_item_size, 0);
@@ -714,15 +720,18 @@ function showCardsCarousel(cardsToAdd) {
 
 }
 
+
 function createCardsCarousel(cardsData) {
 
     var cards = "";
 
     for (i = 0; i < cardsData.length; i++) {
-        title = cardsData[i].name;
-        ratings = Math.round((cardsData[i].ratings / 5) * 100) + "%";
-        data = cardsData[i];
-        item = '<div class="carousel_cards in-left">' + '<img class="cardBackgroundImage" src="' + cardsData[i].image + '"><div class="cardFooter">' + '<span class="cardTitle" title="' + title + '">' + title + "</span> " + '<div class="cardDescription">' + '<div class="stars-outer">' + '<div class="stars-inner" style="width:' + ratings + '" ></div>' + "</div>" + "</div>" + "</div>" + "</div>";
+//        title = cardsData[i].name;
+        title = cardsData[i];
+//        ratings = Math.round((cardsData[i].ratings / 5) * 100) + "%";
+//        console.log("cardsData",cardsData[i]);
+//        data = cardsData[i];
+        item = '<div class="carousel_cards in-left">' + '<img class="cardBackgroundImage" src="./static/img/'+'userAvatar.jpg"' + cardsData[i].image + '"><div class="cardFooter">' + '<span class="cardTitle" title="' + title + '">' + title + "</span> " + '<div class="cardDescription">' + "</div>" + "</div>" + "</div>";
 
         cards += item;
     }
