@@ -35,7 +35,7 @@ recognition.onresult = function(event) {
     Content += transcript;
     console.log("Content value is ",Content)
 
-var UserResponse = '<img class="userAvatar" src=' + "satyamaevjayte.png" + '><p class="userMsg">' + Content + ' </p><div class="clearfix"></div>';
+var UserResponse = '<img class="userAvatar" src=' + "userAvatar.jpg" + '><p class="userMsg">' + Content + ' </p><div class="clearfix"></div>';
     $(UserResponse).appendTo(".chats").show("slow");
     scrollToBottomOfResults();
     send(Content);
@@ -267,7 +267,7 @@ $("#sendButton").on("click", function(e) {
 
 //==================================== Set user response =====================================
 function setUserResponse(message) {
-    var UserResponse = '<img class="userAvatar" src=' + "satyamaevjayte.png" + '><p class="userMsg">' + message + ' </p><div class="clearfix"></div>';
+    var UserResponse = '<img class="userAvatar" src=' + "userAvatar.jpg" + '><p class="userMsg">' + message + ' </p><div class="clearfix"></div>';
     $(UserResponse).appendTo(".chats").show("slow");
 
     $(".usrInput").val("");
@@ -445,6 +445,8 @@ function setBotResponse(response) {
                         scrollToBottomOfResults();
                         return;
                     }
+
+
 
                     //check if the custom payload type is "cardsCarousel"
                     if (response[i].custom.payload == "cardsCarousel") {
@@ -676,69 +678,97 @@ $("#btn-close").click(function() {
 //====================================== Cards Carousel =========================================
 //====================================== Cards Carousel =========================================
 
-function showCardsCarousel(cardsToAdd) {
-    var cards = createCardsCarousel(cardsToAdd);
-//     console.log("card",cards)
-    $(cards).appendTo(".chats").show();
+//====================================== Cards Carousel =========================================
+function createCardsCarousel(cardsData) {
+  let cards = "";
+  for (let i = 0; i < cardsData.length; i += 1) {
+    const title = cardsData[i];
+    const ratings = `${Math.round((cardsData[i].ratings / 5) * 100)}%`;
+    const item = `<div class="carousel_cards in-left">
+    <img class="cardBackgroundImage" src="${cardsData[i].image}">
+    <div class="cardFooter"> <span class="cardTitle" title="${title}">${title}</span>
+    <div class="cardsButtons" >
+        <input class="favorite styled" style="
+              transition: all .5s ease;
+              top:-22px;
+      display: block;
+      box-sizing: border-box;
+      height:50%
+      margin: 0 auto;
+      width: 100%;
+      height:100%;
+      max-width: 200px;
+    background-color : transparent;
+      border-radius: 1px;
+      color: #fff;
+      text-align: center;
+      text-decoration: none;
+      letter-spacing: 1px;
+      transition: all 0.3s ease-out;
+      position: relative;
+      border: none;
 
 
-    if (cardsToAdd.length <= 2) {
-        $(".cards_scroller>div.carousel_cards:nth-of-type(" + i + ")").fadeIn(3000);
-    } else {
-        for (var i = 0; i < cardsToAdd.length; i++) {
-            $(".cards_scroller>div.carousel_cards:nth-of-type(" + i + ")").fadeIn(3000);
-        }
-        $(".cards .arrow.prev").fadeIn("3000");
-        $(".cards .arrow.next").fadeIn("3000");
-    }
 
 
-    scrollToBottomOfResults();
 
-    const card = document.querySelector("#paginated_cards");
+    "type="button" id="btn" value="${title}" onclick="msg(value)">
+    </div></div></div>`;
 
-    const card_scroller = card.querySelector(".cards_scroller");
-//        console.log("const card", card_scroller);
-    var card_item_size = 225;
+    cards += item;
+  }
 
-    card.querySelector(".arrow.next").addEventListener("click", scrollToNextPage);
-    card.querySelector(".arrow.prev").addEventListener("click", scrollToPrevPage);
-//    card.querySelector(".cardFooter").addEventListener("click", hey);
+  const cardContents = `<div id="paginated_cards" class="cards"> <div class="cards_scroller">${cards} <span class="arrow prev fa fa-chevron-circle-left "></span> <span class="arrow next fa fa-chevron-circle-right" ></span> </div> </div>`;
+  return cardContents;
+}
+//
+function msg(value) {
+// value=document.getElementById("btn").value;
 
-    // For paginated scrolling, simply scroll the card one item in the given
-    // direction and let css scroll snaping handle the specific alignment.
-    function scrollToNextPage() {
-        card_scroller.scrollBy(card_item_size, 0);
-    }
-//    function hey() {
-//        alert("hey");
-//    }
-
-    function scrollToPrevPage() {
-        card_scroller.scrollBy(-card_item_size, 0);
-    }
-
+ $(".cards").remove();
+//value.appendTo(".chats").show();
+ send(value);
 }
 
+/**
+ * appends cards carousel on to the chat screen
+ * @param {Array} cardsToAdd json array
+ */
+function showCardsCarousel(cardsToAdd) {
+  const cards = createCardsCarousel(cardsToAdd);
 
-function createCardsCarousel(cardsData) {
+  $(cards).appendTo(".chats").show();
 
-    var cards = "";
-
-    for (i = 0; i < cardsData.length; i++) {
-//        title = cardsData[i].name;
-        title = cardsData[i];
-//        ratings = Math.round((cardsData[i].ratings / 5) * 100) + "%";
-//        console.log("cardsData",cardsData[i]);
-//        data = cardsData[i];
-        item = '<div class="carousel_cards in-left">' + '<img class="cardBackgroundImage" src="satyamaevjayte.png"' + cardsData[i].image + '"><div class="cardFooter">' + '<span class="cardTitle" title="' + title + '">' + title + "</span> " + '<div class="cardDescription">' + "</div>" + "</div>" + "</div>";
-
-        cards += item;
+  if (cardsToAdd.length <= 2) {
+    $(`.cards_scroller>div.carousel_cards:nth-of-type(${i})`).fadeIn(3000);
+  } else {
+    for (let i = 0; i < cardsToAdd.length; i += 1) {
+      $(`.cards_scroller>div.carousel_cards:nth-of-type(${i})`).fadeIn(3000);
     }
+    $(".cards .arrow.prev").fadeIn("3000");
+    $(".cards .arrow.next").fadeIn("3000");
+  }
 
-    var cardContents = '<div id="paginated_cards" class="cards"> <div class="cards_scroller">' + cards + '  <span class="arrow prev fa fa-chevron-circle-left "></span> <span class="arrow next fa fa-chevron-circle-right" ></span> </div> </div>';
+  scrollToBottomOfResults();
 
-    return cardContents;
+  const card = document.querySelector("#paginated_cards");
+  const card_scroller = card.querySelector(".cards_scroller");
+  const card_item_size = 225;
+
+  /**
+   * For paginated scrolling, simply scroll the card one item in the given
+   * direction and let css scroll snaping handle the specific alignment.
+   */
+  function scrollToNextPage() {
+    card_scroller.scrollBy(card_item_size, 0);
+  }
+
+  function scrollToPrevPage() {
+    card_scroller.scrollBy(-card_item_size, 0);
+  }
+
+  card.querySelector(".arrow.next").addEventListener("click", scrollToNextPage);
+  card.querySelector(".arrow.prev").addEventListener("click", scrollToPrevPage);
 }
 
 //====================================== Quick Replies ==================================================
