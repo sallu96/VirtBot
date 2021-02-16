@@ -685,7 +685,7 @@ function createCardsCarousel(cardsData) {
     const title = cardsData[i];
     const ratings = `${Math.round((cardsData[i].ratings / 5) * 100)}%`;
     const item = `<div class="carousel_cards in-left">
-    <img class="cardBackgroundImage" src="${cardsData[i].image}">
+    <img class="cardBackgroundImage" src="satyamaevjayte.png">
     <div class="cardFooter">
     <div class="cardsButtons" >
         <input class="favorite styled" style="
