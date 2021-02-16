@@ -686,11 +686,11 @@ function createCardsCarousel(cardsData) {
     const ratings = `${Math.round((cardsData[i].ratings / 5) * 100)}%`;
     const item = `<div class="carousel_cards in-left">
     <img class="cardBackgroundImage" src="${cardsData[i].image}">
-    <div class="cardFooter"> <span class="cardTitle" title="${title}">${title}</span>
+    <div class="cardFooter">
     <div class="cardsButtons" >
         <input class="favorite styled" style="
               transition: all .5s ease;
-              top:-22px;
+              top:-2px;
       display: block;
       box-sizing: border-box;
       height:50%
@@ -707,6 +707,7 @@ function createCardsCarousel(cardsData) {
       transition: all 0.3s ease-out;
       position: relative;
       border: none;
+      white-space: normal;
 
 
 
